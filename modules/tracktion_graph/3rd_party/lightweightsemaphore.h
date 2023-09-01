@@ -221,6 +221,7 @@ public:
 
 		int rc;
 		do {
+
 			rc = sem_timedwait(&m_sema, &ts);
 		} while (rc == -1 && errno == EINTR);
 		return rc == 0;

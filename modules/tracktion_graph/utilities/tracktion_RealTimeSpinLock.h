@@ -36,6 +36,7 @@ public:
             {
                 #if JUCE_INTEL
                  _mm_pause();
+                #elif JUCE_WASM
                 #else
                  __asm__ __volatile__ ("yield");
                 #endif

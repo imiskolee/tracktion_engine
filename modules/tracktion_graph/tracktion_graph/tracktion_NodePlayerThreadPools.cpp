@@ -29,6 +29,8 @@ namespace
        #if JUCE_INTEL
         _mm_pause();
         _mm_pause();
+       #elif JUCE_WASM
+
        #else
         __asm__ __volatile__ ("yield");
         __asm__ __volatile__ ("yield");
@@ -259,6 +261,7 @@ private:
        #if JUCE_INTEL
         _mm_pause();
         _mm_pause();
+       #elif JUCE_WASM
        #else
         __asm__ __volatile__ ("yield");
         __asm__ __volatile__ ("yield");

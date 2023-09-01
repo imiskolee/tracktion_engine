@@ -10,19 +10,21 @@
 
 #pragma once
 
+
 #ifdef _WIN32
  #include <intrin.h>
-#elif defined (__arm__) || defined (__arm64__) || defined (__aarch64__)
+#elif defined (__arm__) || defined (__arm64__) || defined (__aarch64__) || JUCE_WASM
  // Use clang built-in
 #else
  #include <x86intrin.h>
 #endif
 
-#if defined (__arm__) || defined (__arm64__) || defined (__aarch64__)
+#if defined (__arm__) || defined (__arm64__) || defined (__aarch64__) || JUCE_WASM
  // Use asm yield
 #elif __has_include(<emmintrin.h>)
  #include <emmintrin.h>
 #endif
+
 
 namespace tracktion { inline namespace core
 {
@@ -40,9 +42,12 @@ inline std::uint64_t rdtsc()
     #else
      return __rdtsc();
     #endif
+   #elif JUCE_WASM
+     return 0;
    #else
     return __rdtsc();
    #endif
+
 }
 
 /** Pauses the CPU for an instruction.
@@ -52,8 +57,10 @@ inline void pause()
 {
    #if defined (__arm__) || defined (__arm64__) || defined (__aarch64__)
     __asm__ __volatile__ ("yield");
-   #elif __has_include(<emmintrin.h>)
+   #elif __has_include(<emmintrin.h>) && !JUCE_WASM
     _mm_pause();
+   #elif JUCE_WASM
+        return;
    #else
     static_assert (false, "Unknown platform");
    #endif

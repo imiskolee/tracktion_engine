@@ -17,8 +17,7 @@ namespace tracktion { inline namespace engine
 
     This specifies the BPM, time sig, etc. at a particular time
 */
-class TempoSetting   : public juce::ReferenceCountedObject,
-                       public CurveEditorPoint
+class TempoSetting   : public juce::ReferenceCountedObject
 {
 public:
     //==============================================================================
@@ -46,8 +45,6 @@ public:
     static constexpr double maxBPM = 300.0;
 
     //==============================================================================
-    /** Returns the description of this Selectable. */
-    juce::String getSelectableDescription() override;
 
     //==============================================================================
     /** Returns the start beat of the setting. */

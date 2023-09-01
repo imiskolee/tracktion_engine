@@ -40,10 +40,7 @@ Edit& TempoSetting::getEdit() const
 }
 
 //==============================================================================
-juce::String TempoSetting::getSelectableDescription()
-{
-    return TRANS("Tempo");
-}
+
 
 //==============================================================================
 TimePosition TempoSetting::getStartTime() const
@@ -72,10 +69,6 @@ void TempoSetting::set (BeatPosition newStartBeat, double newBPM, float newCurve
         curve = newCurve;
         startBeatNumber = newStartBeat;
 
-        changed();
-
-        if (remapEditPositions)
-            snap.remapEdit (getEdit());
     }
 }
 

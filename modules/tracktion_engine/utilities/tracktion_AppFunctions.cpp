@@ -466,7 +466,8 @@ namespace AppFunctions
                                      .roundTimeNearest (getCurrentUIBehaviour().getEditingPosition (edit), tempoSequence);
 
                 if (auto newTempo = tempoSequence.insertTempo (nearestBeat))
-                    sm->selectOnly (*newTempo);
+                   // sm->selectOnly (*newTempo);
+                {}
                 else
                     edit.engine.getUIBehaviour().showWarningMessage (TRANS("Tempo changes must be further than 1 beat apart") + "...");
             }
