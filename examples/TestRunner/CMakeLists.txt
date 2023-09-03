@@ -43,9 +43,9 @@ set_target_properties(${TARGET_NAME} PROPERTIES
     C_VISIBILITY_PRESET hidden
     CXX_VISIBILITY_PRESET hidden)
 
-set(SourceFiles
-    ${TARGET_NAME}.cpp
-    ${TARGET_NAME}.h)
+file(GLOB_RECURSE SourceFiles "*.cpp" "*.h" "*.cc")
+
+
 
 target_sources(${TARGET_NAME} PRIVATE ${SourceFiles})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX Source FILES ${SourceFiles})

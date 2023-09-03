@@ -30,12 +30,14 @@ target_compile_features(${TARGET_NAME} PRIVATE cxx_std_17)
 set_target_properties(${TARGET_NAME} PROPERTIES
     C_VISIBILITY_PRESET hidden
     CXX_VISIBILITY_PRESET hidden)
-set(SourceFiles
-        TestWasm.h
-        TestWasm.cpp)
+
+file(GLOB_RECURSE SourceFiles "src/*.cpp" "src/*.h" "src/*.cc")
+
+include_directories("src")
 
 target_sources(${TARGET_NAME} PRIVATE ${SourceFiles})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX Source FILES ${SourceFiles})
+
 
 
 target_compile_definitions(${TARGET_NAME} PRIVATE

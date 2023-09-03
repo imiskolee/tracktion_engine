@@ -20,12 +20,15 @@ struct CrashStackTracer::CrashTraceThreads
 
     inline void push (CrashStackTracer* c)
     {
-        entries.add (c);
+#ifndef JUCE_WASM
+     entries.add (c);
+#endif
     }
-
     inline void pop (CrashStackTracer* c)
     {
-        entries.removeFirstMatchingValue (c);
+#ifndef JUCE_WASM
+    entries.removeFirstMatchingValue (c);
+#endif
     }
 
     void dump() const

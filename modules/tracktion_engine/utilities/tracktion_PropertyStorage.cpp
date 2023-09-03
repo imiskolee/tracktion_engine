@@ -175,7 +175,6 @@ juce::File PropertyStorage::getAppCacheFolder()
 juce::File PropertyStorage::getAppPrefsFolder()
 {
     auto f = juce::File::getSpecialLocation (juce::File::userApplicationDataDirectory).getChildFile (getApplicationName());
-
     if (! f.isDirectory())
         f.createDirectory();
 
@@ -195,30 +194,45 @@ juce::String PropertyStorage::getApplicationVersion()
 //==============================================================================
 void PropertyStorage::removeProperty (SettingID setting)
 {
+#ifdef JUCE_WASM
+            return;
+#endif
     auto& as = *ApplicationSettings::getInstance();
     as.removeValue (PropertyStorage::settingToString (setting));
 }
 
 juce::var PropertyStorage::getProperty (SettingID setting, const juce::var& defaultValue)
 {
+#ifdef JUCE_WASM
+    return defaultValue;
+#endif
     auto& as = *ApplicationSettings::getInstance();
     return as.getValue (PropertyStorage::settingToString (setting), defaultValue);
 }
 
 void PropertyStorage::setProperty (SettingID setting, const juce::var& value)
 {
+#ifdef JUCE_WASM
+    return;
+#endif
     auto& as = *ApplicationSettings::getInstance();
     as.setValue (PropertyStorage::settingToString (setting), value);
 }
 
 std::unique_ptr<juce::XmlElement> PropertyStorage::getXmlProperty (SettingID setting)
 {
+#ifdef JUCE_WASM
+    return nullptr;
+#endif
     auto& as = *ApplicationSettings::getInstance();
     return std::unique_ptr<juce::XmlElement> (as.getXmlValue (PropertyStorage::settingToString (setting)));
 }
 
 void PropertyStorage::setXmlProperty (SettingID setting, const juce::XmlElement& xml)
 {
+#ifdef JUCE_WASM
+    return;
+#endif
     auto& as = *ApplicationSettings::getInstance();
     as.setValue (PropertyStorage::settingToString (setting), &xml);
 }
@@ -226,30 +240,45 @@ void PropertyStorage::setXmlProperty (SettingID setting, const juce::XmlElement&
 //==============================================================================
 void PropertyStorage::removePropertyItem (SettingID setting, juce::StringRef item)
 {
+#ifdef JUCE_WASM
+            return;
+#endif
     auto& as = *ApplicationSettings::getInstance();
     as.removeValue (PropertyStorage::settingToString (setting) + "_" + item);
 }
 
 juce::var PropertyStorage::getPropertyItem (SettingID setting, juce::StringRef item, const juce::var& defaultValue)
 {
+#ifdef JUCE_WASM
+    return defaultValue;
+#endif
     auto& as = *ApplicationSettings::getInstance();
     return as.getValue (PropertyStorage::settingToString (setting) + "_" + item, defaultValue);
 }
 
 void PropertyStorage::setPropertyItem (SettingID setting, juce::StringRef item, const juce::var& value)
 {
+#ifdef JUCE_WASM
+    return;
+#endif
     auto& as = *ApplicationSettings::getInstance();
     as.setValue (PropertyStorage::settingToString (setting) + "_" + item, value);
 }
 
 std::unique_ptr<juce::XmlElement> PropertyStorage::getXmlPropertyItem (SettingID setting, juce::StringRef item)
 {
+#ifdef JUCE_WASM
+    return nullptr;
+#endif
     auto& as = *ApplicationSettings::getInstance();
     return std::unique_ptr<juce::XmlElement> (as.getXmlValue (PropertyStorage::settingToString (setting) + "_" + item));
 }
 
 void PropertyStorage::setXmlPropertyItem (SettingID setting, juce::StringRef item, const juce::XmlElement& xml)
 {
+#ifdef JUCE_WASM
+    return;
+#endif
     auto& as = *ApplicationSettings::getInstance();
     as.setValue (PropertyStorage::settingToString (setting) + "_" + item, &xml);
 }
